@@ -9,7 +9,14 @@ public static class RockPaperScissors
     Scissors = 3
   }
 
-  public static Play Map(string play)
+  public enum PlayResult
+  {
+    Loss = 0,
+    Draw = 3,
+    Win = 6
+  }
+
+  public static Play MapToPlay(string play)
   {
     if (play == "A" || play == "X")
     {
@@ -22,6 +29,46 @@ public static class RockPaperScissors
     if (play == "C" || play == "Z")
     {
       return Play.Scissors;
+    }
+
+    throw new Exception("Should not get here");
+  }
+
+  public static PlayResult MapToResult(string outcome)
+  {
+    if (outcome == "X")
+    {
+      return PlayResult.Loss;
+    }
+    if (outcome == "Y")
+    {
+      return PlayResult.Draw;
+    }
+    if (outcome == "Z")
+    {
+      return PlayResult.Win;
+    }
+
+    throw new Exception("Should not get here");
+  }
+
+  public static Play FindPlay(Play opp, PlayResult outcome)
+  {
+    if (outcome == PlayResult.Draw)
+    {
+      return opp;
+    }
+    if (opp == Play.Rock)
+    {
+      return outcome == PlayResult.Win ? Play.Paper : Play.Scissors;
+    }
+    if (opp == Play.Paper)
+    {
+      return outcome == PlayResult.Win ? Play.Scissors : Play.Rock;
+    }
+    if (opp == Play.Scissors)
+    {
+      return outcome == PlayResult.Win ? Play.Rock : Play.Paper;
     }
 
     throw new Exception("Should not get here");
